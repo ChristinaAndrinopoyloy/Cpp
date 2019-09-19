@@ -1,0 +1,89 @@
+#include "mymath.h"
+
+/*vector1 * vector2 = result*/
+double vector_multiplication(vector<double> vector1, vector<double> vector2)
+{
+    return inner_product(vector1.begin(), vector1.end(), vector2.begin(), 0.0);
+}
+
+/* euclidean or cosine distance of two vectors*/
+double compute_distance(vector<double> a, vector<double> b, dataset &data)
+{
+    if (data.get_method() == "euclidean")
+    {
+        double dist;
+        vector<double> auxiliary;
+        transform(a.begin(), a.end(), b.begin(), back_inserter(auxiliary),
+                  [](double element1, double element2) { return pow((element1 - element2), 2); });
+        auxiliary.shrink_to_fit();
+
+        dist = sqrt(std::accumulate(auxiliary.begin(), auxiliary.end(), 0.0));
+        return dist;
+    }
+    else
+    {
+        if (all_of(a.begin(), a.end(), [](double i) { return i == 0.0; }))
+        {
+            return 1000.0;
+        }
+        else
+        {
+            if (all_of(b.begin(), b.end(), [](double i) { return i == 0.0; }))
+            {
+                return 1000.0;
+            }
+            else
+            {
+                double num, denom;
+                double norm_a = 0;
+                double norm_b = 0;
+            
+
+                num = vector_multiplication(a, b);
+                norm_a = vector_multiplication(a, a);
+                norm_b = vector_multiplication(b, b);
+                denom = sqrt(norm_a * norm_b);
+
+                if(num > denom)
+                {
+                    return 1000.0;
+                }
+
+                return 1 - num / denom;
+            }
+        }
+    }
+}
+
+/*generate a v~N(0,1) vector*/
+vector<double> generate_vector_normalDistribution(int d)
+{
+    int i;
+    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+    default_random_engine generator(seed);
+    vector<double> vector;
+
+    normal_distribution<double> distribution(0.0, 1.0);
+
+    for (i = 0; i < d; i++)
+    {
+        vector.push_back(distribution(generator));
+    }
+
+    return vector;
+}
+
+/* compute hamming distance*/
+int hammingDistance(string string1, string string2)
+{
+    unsigned int i;
+    int count = 0;
+
+    for (i = 0; i < string1.size(); i++)
+    {
+        if (string1[i] != string2[i])
+            count++;
+        i++;
+    }
+    return count;
+}

@@ -1,0 +1,9 @@
+Algorithm: 1x4x7
+Metric: euclidean
+CLUSTER-0 (size: 24, centroid: 4095)
+CLUSTER-1 (size: 22, centroid: 3690)
+CLUSTER-2 (size: 519, centroid: 3592)
+CLUSTER-3 (size: 3281, centroid: 159)
+CLUSTER-4 (size: 302, centroid: 1007)
+clustering_time: 1062.58
+Silhouette: [0.148624,0.224125,0.00751231,0.00845938,0.0649417,0.0907324,]
